@@ -49,19 +49,25 @@ body {
   max-width: 50px;
 }
 
-.weather__header {
+/* .weather__header {
   display: flex;
-}
+} */
 
-.weather__main {
+/* .weather__main {
   flex: 1 1 auto;
-}
+} */
 
 .weather__city {
   font-size: 40px;
   font-weight: 700;
   margin-bottom: 15px;
   color: rgb(31, 8, 238);
+}
+
+.weather__country {
+  font-size: 25px;
+  font-weight: 700;
+  color: rgb(0, 0, 0);
 }
 
 .weather__status {
@@ -79,8 +85,13 @@ body {
   padding: 1px;
 }
 
-.weather__temp::after,
 .weather__feels-like::after {
+  display: inline-block;
+  margin-left: 5px;
+  /* content: '°C'; */
+}
+
+.weather__temp::after {
   display: inline-block;
   margin-left: 5px;
   content: '°C';

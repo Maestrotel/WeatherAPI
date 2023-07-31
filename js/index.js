@@ -37,25 +37,33 @@ async function loadWeather() {
 }
 
 function getWeather(data) {
-  // console.log(data);
+  console.log(data);
+
+  const time = Date.now() + 1000 * (data.timezone / 3600);
+  const millitime = new Date(time);
+  const dateFormat = millitime.toLocaleString();
 
   const location = data.name;
+  const locationCountry = data.sys.country;
   const temp = Math.round(data.main.temp);
   const feelsLike = Math.round(data.main.feels_like);
+  const humidity = Math.round(data.main.humidity);
   const weatherStatus = data.weather[0].main;
   const weatherIcon = data.weather[0].icon;
 
   const template = `
     <div class="weather__header">
       <div class="weather__main">
-        <div class="weather__city">${location}</div>
+        <div class="weather__time">${dateFormat}</div>
+        <div class="weather__city">${location}<span class="weather__country">, ${locationCountry}</span></div>
         <div class="weather__status">${weatherStatus}</div>
       </div>
       <div class="weather__icon">
         <img src="http://openweathermap.org/img/w/${weatherIcon}.png" alt="${weatherStatus}</div>
       </div>
-      <div class="weather__temp">${temp}</div>
+      <div class="weather__temp">Temp: ${temp}</div>
       <div class="weather__feels-like">Feels like: ${feelsLike}</div>
+      <div class="weather__humidity">Humidity: ${humidity} %</div>
     </div>`;
 
   weatherBlock.innerHTML = template;
