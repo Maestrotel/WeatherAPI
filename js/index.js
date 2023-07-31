@@ -57,16 +57,16 @@ function getWeather(data) {
         <div class="weather__time">${dateFormat}</div>
         <div class="weather__city">${location}<span class="weather__country">, ${locationCountry}</span></div>
       </div>
-      <div class="weather_condition">
+      <div class="weather__condition">
         <div class="weather__icon">
           <img src="http://openweathermap.org/img/w/${weatherIcon}.png" alt="${weatherStatus}</div>
         </div>
         <div class="weather__status">${weatherStatus}</div>
       </div>
     </div>
-    <div class="weather__temp">Temp: ${temp} &#8451;</div>
-    <div class="weather__feels-like">Feels like: ${feelsLike} &#8451;</div>
-    <div class="weather__humidity">Humidity: ${humidity} %</div>
+    <div class="weather__temp">Temp: <span class="weather__digits">${temp}</span> &#8451;</div>
+    <div class="weather__feels-like">Feels like: <span class="weather__digits">${feelsLike}</span> &#8451;</div>
+    <div class="weather__humidity">Humidity: <span class="weather__digits">${humidity}</span> %</div>
     `;
 
   weatherBlock.innerHTML = template;
@@ -75,3 +75,11 @@ function getWeather(data) {
 if (weatherBlock) {
   loadWeather();
 }
+
+VanillaTilt.init(document.querySelectorAll('.weather'), {
+  max: 25,
+  speed: 400,
+  easing: 'cubic-bezier(.03,.98,.52,.99)',
+  perspective: 500,
+  transition: true,
+});
