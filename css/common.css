@@ -39,6 +39,15 @@ body {
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.3);
 }
 
+.weather__time {
+  color: rgb(133, 103, 7);
+}
+
+.weather__header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .weather__loading {
   display: flex;
   justify-content: center;
@@ -76,23 +85,19 @@ body {
 }
 
 .weather__temp {
-  font-size: 30px;
-  font-weight: 700;
   margin-bottom: 10px;
 }
 
 .weather__feels-like {
-  padding: 1px;
+  margin-bottom: 10px;
 }
 
 .weather__feels-like::after {
   display: inline-block;
   margin-left: 5px;
-  /* content: '°C'; */
 }
 
 .weather__temp::after {
   display: inline-block;
   margin-left: 5px;
-  content: '°C';
 }
