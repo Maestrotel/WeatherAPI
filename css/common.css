@@ -80,8 +80,9 @@ button {
   margin-bottom: 10px;
 }
 
-/* .weather__feels-like {
-} */
+.weather__feels-like {
+  padding: 1px;
+}
 
 .weather__temp::after,
 .weather__feels-like::after {

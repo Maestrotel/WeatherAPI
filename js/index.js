@@ -1,52 +1,66 @@
-// import { galleryItems } from './gallery-items.js';
-// // Change code below this line
+'use strict';
+// ---------------------------------------------------------------------
+// import dotenv from 'dotenv';
+// import { join } from 'path';
+// const envPath = join(__dirname, '..', '.env');
+// dotenv.config({ path: envPath });
+// const dotenv = require('dotenv');
 
-// console.log(galleryItems);
-
-// const galleryBlock = document.querySelector('.gallery');
-
-// function createGallaryMark(pictures) {
-//   return pictures.map((picture) => `<div class="gallery__item">
-//         <a class="gallery__link" href="${picture.original}">
-//             <img
-//               class="gallery__image"
-//               src="${picture.preview}"
-//               data-source="${picture.original}"
-//               alt="${picture.description}"
-//             />
-//           </a>
-//       </div>`
-//     )
-//     .join("");
+// const result = dotenv.config();
+// if (result.error) {
+//   throw result.error;
 // }
 
-// const addGallaryMark = createGallaryMark(galleryItems);
+// dotenv.config();
 
-// galleryBlock.innerHTML = addGallaryMark;
+// const { API_KEY } = process.env;
+// console.log(API_KEY);
+// ----------------------------------------------------------------------------
+const weatherBlock = document.querySelector('#weather');
 
-// galleryBlock.addEventListener("click", onPictureClick);
+async function loadWeather() {
+  weatherBlock.innerHTML = `
+  <div class="weather__loading">
+    <img src="/assets/loading.gif" alt="Loading..." />
+  </div>`;
 
-// function onPictureClick(e) {
-//   blockStandartAction(e);
+  const server =
+    'https://api.openweathermap.org/data/2.5/weather?units=metric&q=Kharkiv&appid=af458df7fed01c2ab7d49f4144863696';
+  const response = await fetch(server, { method: 'GET' });
+  const responseResult = await response.json();
 
-//   if (e.target.nodeName !== "IMG") {
-//     return;
-//   }
+  if (response.ok) {
+    getWeather(responseResult);
+  } else {
+    weatherBlock.innerHTML = responseResult.message;
+  }
+}
 
-//   const instance = basicLightbox.create(
-//     `<img src="${e.target.dataset.source}" width="800" height="600">`
-//   );
+function getWeather(data) {
+  // console.log(data);
 
-//   instance.show();
+  const location = data.name;
+  const temp = Math.round(data.main.temp);
+  const feelsLike = Math.round(data.main.feels_like);
+  const weatherStatus = data.weather[0].main;
+  const weatherIcon = data.weather[0].icon;
 
-//   galleryBlock.addEventListener("keydown", (e) => {
-//     if (e.code === "Escape") {
-//       instance.close();
-//       }
-//     })
+  const template = `
+    <div class="weather__header">
+      <div class="weather__main">
+        <div class="weather__city">${location}</div>
+        <div class="weather__status">${weatherStatus}</div>
+      </div>
+      <div class="weather__icon">
+        <img src="http://openweathermap.org/img/w/${weatherIcon}.png" alt="${weatherStatus}</div>
+      </div>
+      <div class="weather__temp">${temp}</div>
+      <div class="weather__feels-like">Feels like: ${feelsLike}</div>
+    </div>`;
 
-// }
+  weatherBlock.innerHTML = template;
+}
 
-// function blockStandartAction(e) {
-//   e.preventDefault();
-// }
+if (weatherBlock) {
+  loadWeather();
+}
